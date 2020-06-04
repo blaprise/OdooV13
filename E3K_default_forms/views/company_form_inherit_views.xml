@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="view_company_form_inherit_notes" model="ir.ui.view">
+        <field name="name">company_form_inherit</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='phone']" position="before">
+                <field name="note_order" placeholder="Sale Order Note"/>
+                <field name="note_quotation" placeholder="Quotation Note"/>
+                <field name="note_invoice" placeholder="Invoice Note"/>
+            </xpath>
+            <xpath expr="//group[@name='social_media']" position="before">
+                <field name="bank_note"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <template id="e3k_report_invoice_document_inherit" inherit_id="sale.report_invoice_document_inherit_sale">
+        <xpath expr="//t[@t-set='address']" position="replace">
+            <!--- invoice block -->
+            <t t-if="o.partner_shipping_id != o.partner_id">
+                <t t-set="information_block">
+                    <strong>Adress de facturation</strong>
+                    <span t-field="o.partner_id"
+                          t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                </t>
+                <t t-set="address">
+                    <div groups="sale.group_delivery_invoice_address">
+                        <strong>Adress de livraison:</strong>
+                        <span t-field="o.partner_shipping_id"
+                              t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"
+                           style="float:left;padding-right:1%;padding-top:2%;"/>
+                        <span t-field="o.partner_shipping_id"
+                              t-options='{"widget": "contact", "fields": ["phone"], "no_marker": True}'/>
+                    </div>
+                </t>
+            </t>
+            <t t-else="">
+                <strong>Adress de facturation et de livraison</strong>
+                <span t-field="o.partner_id"
+                      t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"
+                   style="float:left;padding-right:0.5%;padding-top:0.5%;"/>
+                <span t-field="o.partner_id"
+                      t-options='{"widget": "contact", "fields": ["phone"], "no_marker": True}'/>
+            </t>
+
+            <div t-if="o.partner_id.vat" class="mt16">
+                <t t-if="o.company_id.country_id.vat_label" t-esc="o.company_id.country_id.vat_label"
+                   id="inv_tax_id_label"/>
+                <t t-else="">Tax ID</t>:
+                <span t-field="o.partner_id.vat"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>
